@@ -1,0 +1,37 @@
+{
+    "name": "megaads/apify-client-php",
+    "description": "Apify client for PHP",
+    "keywords": [
+        "api",
+        "rest",
+        "microservice",
+        "webservice",
+        "api generator",
+        "lumen",
+        "laravel"
+    ],
+    "homepage": "https://www.megaads.vn",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "megaads-vn",
+            "email": "info@megaads.vn"
+        },
+        {
+            "name": "phuluong",
+            "email": "phult.contact@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-4": {
+            "Megaads\\ApifyClient\\": "src/"
+        }
+    }
+}
