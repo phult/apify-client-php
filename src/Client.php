@@ -227,7 +227,6 @@ class Client
         $originalEntity = self::$client->entity;
         self::$client->entity .= "/" . $id;
         $requestURL = self::$client->toURL();
-        var_dump($requestURL);
         self::$client->entity = $originalEntity;
         return self::request($requestURL, self::METHOD_PUT, $data, self::$requestHeaders);
     }
