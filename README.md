@@ -16,7 +16,8 @@ use Megaads\ApifyClient\Client;
 
 $query = Client::endpoint("product", [
     Client::OPTION_API_HOST => "https://api.domain.com",
-    Client::OPTION_API_AUTH => "token=dsfqwe123sdf2342c"
+    Client::OPTION_API_AUTH => "token=dsfqwe123sdf2342c",
+    Client::OPTION_REQUEST_HEADER => ["Authorization: Basic QWxhZGRpbjpPcGVuU2VzYW1l"]
 ]);
 ```
 
@@ -199,9 +200,14 @@ Response format
 ```php
 use Megaads\ApifyClient\Client;
 
-$query = Client::request("https://api.domain.com/product", Client::METHOD_POST, [
+$query = Client::request("https://api.domain.com/product", 
+Client::METHOD_POST, 
+[
     "name" => "Hello",
     "code" => "C0001"
+],
+[
+    "Authorization: Basic QWxhZGRpbjpPcGVuU2VzYW1l"
 ]);
 ```
 

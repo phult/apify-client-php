@@ -14,9 +14,11 @@ class Client
     private $embeds = [];
     private $pageSize = null;
     private $pageId = null;
+    private $requestHeaders = [];
 
     const OPTION_API_HOST = "API_HOST";
     const OPTION_API_AUTH = "API_AUTH";
+    const OPTION_REQUEST_HEADER = "REQUEST_HEADER";
 
     const METHOD_GET = "get";
     const METHOD_POST = "post";
@@ -48,6 +50,9 @@ class Client
                     break;
                 case self::OPTION_API_AUTH:
                     self::$client->auth = $value;
+                    break;
+                case self::OPTION_REQUEST_HEADER:
+                    self::$requestHeaders = $value;
                     break;
             }
         }
@@ -180,42 +185,42 @@ class Client
         self::$client->entity .= "/" . $id;
         $requestURL = self::$client->toURL();
         self::$client->entity = $originalEntity;
-        return self::request($requestURL);
+        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
     }
     public function get()
     {
         $requestURL = self::$client->toURL();
-        return self::request($requestURL);
+        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
     }
     public function first()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=first";
-        return self::request($requestURL);
+        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
     }
     public function count()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=count";
-        return self::request($requestURL);
+        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
     }
     public function increase()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=increment";
-        return self::request($requestURL);
+        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
     }
     public function decrease()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=decrement";
-        return self::request($requestURL);
+        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
     }
 
     public function create($data = [])
     {
         $requestURL = self::$client->toURL();
-        return self::request($requestURL, self::METHOD_POST, $data);
+        return self::request($requestURL, self::METHOD_POST, $data, self::$requestHeaders);
     }
     public function update($id, $data = [])
     {
@@ -224,7 +229,7 @@ class Client
         $requestURL = self::$client->toURL();
         var_dump($requestURL);
         self::$client->entity = $originalEntity;
-        return self::request($requestURL, self::METHOD_PUT, $data);
+        return self::request($requestURL, self::METHOD_PUT, $data, self::$requestHeaders);
     }
     public function delete($id)
     {
@@ -232,12 +237,14 @@ class Client
         self::$client->entity .= "/" . $id;
         $requestURL = self::$client->toURL();
         self::$client->entity = $originalEntity;
-        return self::request($requestURL, self::METHOD_DELETE);
+        return self::request($requestURL, self::METHOD_DELETE, [], self::$requestHeaders);
     }
-    public static function request($url, $method = "GET", $data = [])
+    public static function request($url, $method = "GET", $data = [], $headers = [])
     {
         $retval = null;
         $channel = curl_init();
+        $headers[] = 'Content-Type:application/json';
+        curl_setopt($channel, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($channel, CURLOPT_URL, $url);
         curl_setopt($channel, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($channel, CURLOPT_POSTFIELDS, json_encode($data));
@@ -246,7 +253,6 @@ class Client
         curl_setopt($channel, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($channel, CURLOPT_MAXREDIRS, 3);
         curl_setopt($channel, CURLOPT_POSTREDIR, 1);
-        curl_setopt($channel, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
         $response = curl_exec($channel);
         curl_close($channel);
         $retval = json_decode($response, true);
