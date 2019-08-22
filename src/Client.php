@@ -52,7 +52,7 @@ class Client
                     self::$client->auth = $value;
                     break;
                 case self::OPTION_REQUEST_HEADER:
-                    self::$requestHeaders = $value;
+                    self::$client->requestHeaders = $value;
                     break;
             }
         }
@@ -185,42 +185,42 @@ class Client
         self::$client->entity .= "/" . $id;
         $requestURL = self::$client->toURL();
         self::$client->entity = $originalEntity;
-        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_GET, [], self::$client->requestHeaders);
     }
     public function get()
     {
         $requestURL = self::$client->toURL();
-        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_GET, [], self::$client->requestHeaders);
     }
     public function first()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=first";
-        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_GET, [], self::$client->requestHeaders);
     }
     public function count()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=count";
-        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_GET, [], self::$client->requestHeaders);
     }
     public function increase()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=increment";
-        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_GET, [], self::$client->requestHeaders);
     }
     public function decrease()
     {
         $requestURL = self::$client->toURL();
         $requestURL .= "&metric=decrement";
-        return self::request($requestURL, self::METHOD_GET, [], self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_GET, [], self::$client->requestHeaders);
     }
 
     public function create($data = [])
     {
         $requestURL = self::$client->toURL();
-        return self::request($requestURL, self::METHOD_POST, $data, self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_POST, $data, self::$client->requestHeaders);
     }
     public function update($id, $data = [])
     {
@@ -228,7 +228,7 @@ class Client
         self::$client->entity .= "/" . $id;
         $requestURL = self::$client->toURL();
         self::$client->entity = $originalEntity;
-        return self::request($requestURL, self::METHOD_PUT, $data, self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_PUT, $data, self::$client->requestHeaders);
     }
     public function delete($id)
     {
@@ -236,7 +236,7 @@ class Client
         self::$client->entity .= "/" . $id;
         $requestURL = self::$client->toURL();
         self::$client->entity = $originalEntity;
-        return self::request($requestURL, self::METHOD_DELETE, [], self::$requestHeaders);
+        return self::request($requestURL, self::METHOD_DELETE, [], self::$client->requestHeaders);
     }
     public static function request($url, $method = "GET", $data = [], $headers = [])
     {
