@@ -20,11 +20,11 @@ class Client
     const OPTION_API_AUTH = "API_AUTH";
     const OPTION_REQUEST_HEADER = "REQUEST_HEADER";
 
-    const METHOD_GET = "get";
-    const METHOD_POST = "post";
-    const METHOD_PUT = "put";
-    const METHOD_PATCH = "patch";
-    const METHOD_DELETE = "delete";
+    const METHOD_GET = "GET";
+    const METHOD_POST = "POST";
+    const METHOD_PUT = "PUT";
+    const METHOD_PATCH = "PATCH";
+    const METHOD_DELETE = "DELETE";
 
     const SELECTION_EQUAL = "=";
     const SELECTION_NOT_EQUAL = "!=";
