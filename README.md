@@ -126,6 +126,12 @@ $query->filter("districts.name", Client::SELECTION_LIKE, land);
 
 ## Retrieve data
 
+### Find: Retrieve single record
+
+```php
+$query->find(1);
+```
+
 ### Get: Retrieve all records that match the query
 
 ```php
