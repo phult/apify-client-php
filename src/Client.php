@@ -158,8 +158,8 @@ class Client
                         $retval .= $value["field"] . $value["operator"] . (is_array($value["value"]) ? implode(";", $value["value"]) : $value["value"]) . "],";
                         break;
                 }
-                $retval = rtrim($retval, ',');
             }
+            $retval = rtrim($retval, ',');
         }
         //sorts
         if (count(self::$client->sorts) > 0) {
