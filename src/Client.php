@@ -154,7 +154,7 @@ class Client
         }
         //fields
         if (count(self::$client->fields) > 0) {
-            $retval .= "&fields=" . implode(",", self::$client->fields);
+            $retval .= "&fields=" . urlencode(implode(",", self::$client->fields));
         }
         //filters
         if (count(self::$client->filters) > 0) {
@@ -185,8 +185,7 @@ class Client
         }
         //sorts
         if (count(self::$client->sorts) > 0) {
-            $retval .= "&sorts=";
-            $retval .= implode(",", self::$client->sorts);
+            $retval .= "&sorts=" . urlencode(implode(",", self::$client->sorts));
         }
         if (self::$client->pageSize != null) {
             $retval .= "&page_size=" . self::$client->pageSize;
