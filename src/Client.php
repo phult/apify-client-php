@@ -74,6 +74,17 @@ class Client
         }
         return self::$client;
     }
+    public function selectRaw($fields)
+    {
+        if (is_array($fields)) {
+            foreach ($fields as $item) {
+                self::$client->fields['raw(' . $item . ')'] = 'raw(' . $item . ')';
+            }
+        } else {
+            self::$client->fields['raw(' . $fields . ')'] = 'raw(' . $fields . ')';
+        }
+        return self::$client;
+    }
     public function filter($field, $operator, $value)
     {
         self::$client->filters[$field . ":" . $operator . ":" . (is_array($value) ? implode(",", $value) : $value)] = [
@@ -91,6 +102,17 @@ class Client
             }
         } else {
             self::$client->sorts[$sorts] = $sorts;
+        }
+        return self::$client;
+    }
+    public function sortRaw($sorts)
+    {
+        if (is_array($sorts)) {
+            foreach ($sorts as $item) {
+                self::$client->sorts['raw(' . $item . ')'] = 'raw(' . $item . ')';
+            }
+        } else {
+            self::$client->sorts['raw(' . $fields . ')'] = 'raw(' . $fields . ')';
         }
         return self::$client;
     }
