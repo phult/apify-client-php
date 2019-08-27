@@ -112,7 +112,7 @@ class Client
                 self::$client->sorts['raw(' . $item . ')'] = 'raw(' . $item . ')';
             }
         } else {
-            self::$client->sorts['raw(' . $fields . ')'] = 'raw(' . $fields . ')';
+            self::$client->sorts['raw(' . $sorts . ')'] = 'raw(' . $sorts . ')';
         }
         return self::$client;
     }
