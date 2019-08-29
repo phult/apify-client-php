@@ -173,7 +173,7 @@ class Client
                         break;
                     case self::SELECTION_IN:
                     case self::SELECTION_NOT_IN:
-                        $retval .= $value["field"] . $value["operator"] . implode(":", $value["value"]) . "},";
+                        $retval .= $value["field"] . $value["operator"] . implode(";", $value["value"]) . "},";
                         break;
                     case self::SELECTION_BETWEEN:
                     case self::SELECTION_NOT_BETWEEN:
