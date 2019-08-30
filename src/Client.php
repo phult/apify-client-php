@@ -94,6 +94,15 @@ class Client
         ];
         return self::$client;
     }
+    public function filterRaw($filter)
+    {
+        self::$client->filters["raw=" . $filter] = [
+            "field" => "raw",
+            "operator" => self::SELECTION_EQUAL,
+            "value" => $filter,
+        ];
+        return self::$client;
+    }
     public function sort($sorts)
     {
         if (is_array($sorts)) {
