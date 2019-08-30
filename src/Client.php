@@ -99,7 +99,7 @@ class Client
         self::$client->filters["raw=" . $filter] = [
             "field" => "raw",
             "operator" => self::SELECTION_EQUAL,
-            "value" => $filter,
+            "value" => urlencode($filter),
         ];
         return self::$client;
     }
