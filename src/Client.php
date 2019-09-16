@@ -276,7 +276,16 @@ class Client
         curl_setopt($channel, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($channel, CURLOPT_URL, $url);
         curl_setopt($channel, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($channel, CURLOPT_POSTFIELDS, json_encode($data));
+        if (strtoupper($method) == "GET") {
+            if (strpos($url, '?') !== false) {
+                $url = $url . '&' . http_build_query($data);
+            } else {
+                $url = $url . '?' . http_build_query($data);
+            }
+            curl_setopt($channel, CURLOPT_URL, $url);
+        } else {
+            curl_setopt($channel, CURLOPT_POSTFIELDS, json_encode($data));
+        }
         curl_setopt($channel, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($channel, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($channel, CURLOPT_FOLLOWLOCATION, true);
